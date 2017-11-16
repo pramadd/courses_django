@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link href="css/style.css" rel="stylesheet"> -->
+    </head>
+    <body>
+        <div>
+            <h1>Add a new course</h1>
+            <form action="/add" method = 'post'>
+                {%csrf_token%}
+                Name: <input type="text" name="name"><br>
+                Description: <textarea rows="1" cols="50" name ="desc"></textarea><br>
+                <input type="submit" value="Add ">
+            </form>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li style="color:rgb(4, 0, 255)" {%if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <h1>Courses</h1>
+            <table>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+
+                </tr>
+                {%for x in courses%}
+                <tr>
+                    <td>{{x.name}}</td>
+                    <td>{{x.desc}}</td>
+                    <td>{{x.created_at}}</td>
+                    <td><a href="destroy/{{x.id}}">remove</a></td>
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+    </body>
+</html>
